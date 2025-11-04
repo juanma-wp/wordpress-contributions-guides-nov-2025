@@ -1,0 +1,154 @@
+---
+title: Preparing the About Page
+date: June 8, 2021
+author: 
+categories: 
+url: https://make.wordpress.org/core/handbook/about/release-cycle/preparing-the-about-page/
+---
+
+Every WordPress release has an About page. It is shown to users after they finish updating to the new version and includes what the new features are and who contributed to making them.
+
+This is a great marketing opportunity as lots of people get to see this page. It would be fun to have each major About page customized by one of the designers in the WordPress community (otherwise, we fall back on an existing design).
+
+This trend started with WordPress 4.7, you can view the previous designs on Figma: [https://www.figma.com/file/LrjiQZDts99EakxvZ6YcuMIr/About-Page](https://www.figma.com/file/LrjiQZDts99EakxvZ6YcuMIr/About-Page)
+
+If you want to create a page like this, here are the steps to follow:
+
+[Steps](#steps)
+---------------
+
+*   **Know your deadline**: Work on the About page starts once the release reaches Beta 1 and should be complete by RC1.
+*   Create a ticket for the About page kick-off, like this: [https://core.trac.wordpress.org/ticket/46901](https://core.trac.wordpress.org/ticket/46901)
+*   Clearly state what steps are:
+    *   Coordinate between release leads and either marketing or a copywriter to draft initial page copy
+        *   Draft in a google doc so multiple people can write and suggest edits
+        *   Check-in with release leads about headline features
+        *   Check-in with any feature leads if you’re unclear about details
+        *   Go through Beta posts on /news/ to populate features and find copy inspiration
+        *   Go through dev notes on make/core to populate developer happiness section
+        *   Make sure to go through the features of Gutenberg and create a section to call it out with “new editor feature this release.”
+    *   Create images — could be illustrations, icons, or screenshots
+    *   Finalize copy (after the release lead’s last review)
+    *   Finalize design
+    *   Get the page made up
+    *   Test the page in various browsers, checking for image quality
+*   Release Post (for those leading a release)
+    *   Draft new post on wordpress.org/news
+    *   Copy content over from the About page
+    *   Add images, changing size, alignment, or positioning to fit the blog layout
+    *   Pass off to release lead to include credits shortcode and release name
+    *   Get the musician’s name from the release squad lead.
+    *   Post slug should be wp.org/news/yyyy/mm/musician.
+    *   Keep the post with an “album cover” feel.
+
+[Copy](#copy)
+-------------
+
+*   **Audience**: WordPress users and practitioners who are not active in contributing. Assume non-technical.
+*   **Purpose**: To highlight the immediately interesting things and inspire people to experiment and/or learn more. Assume no need to sell WordPress to them.
+*   **Property**: WordPress software
+*   **Assets**: Assume that the copy flow will follow the design flow.
+*   **Voice**: Aim for the positive side of neutral, though you can go all the way to cheerfully American Southern. Not a sales-y voice, since these are people already using WordPress.
+
+[Design](#design) 
+------------------
+
+The About Page has a set framework and it is not meant to be redesigned from scratch each release.
+
+The layout should be considered a stack of containers, which can be 1-4 columns. The content in the columns can be anything — text, video, images, embeds, etc. These containers can have no background color, a “subtle” background color, or “accent” background color (these change with each About page using colors from the header feature). Columns can also have one of these background colors. Containers are stacked on top of each other to create the page.
+
+Wondering why the About Page is not done in the block editor? The biggest blocker is translations. Every string on the page is wrapped in a translation function, with additional translation notes as needed. We’d need to find a way to do that with Gutenberg as well. 
+
+Some items to watch for:
+
+*   The header has the most freedom. It can have a design element background or text effect. Check that it is accessible.
+*   Images, illustrations, and videos are allowed in the content.
+*   There can be 1, 2, 3, or 4 columns and have a colored background.
+*   For technical documentation, see [the about patterns demo plugin](https://github.com/ryelle/about-patterns).
+*   Talk to @ryelle about it. She is in charge of coding and committing the About Page.
+
+Examples of how the boxes can look like:
+
+[![](https://make.wordpress.org/core/files/2021/06/about-demo-2col-162x300.png)](https://make.wordpress.org/core/files/2021/06/about-demo-2col.png)
+
+[![](https://make.wordpress.org/core/files/2021/06/about-demo-3col-1024x488.png)](https://make.wordpress.org/core/files/2021/06/about-demo-3col.png)
+
+[![](https://make.wordpress.org/core/files/2021/06/about-demo-4col-1024x432.png)](https://make.wordpress.org/core/files/2021/06/about-demo-4col.png)
+
+[![](https://make.wordpress.org/core/files/2023/07/Screen-Shot-2023-07-18-at-14.40.20-1024x296.png)](https://make.wordpress.org/core/files/2023/07/Screen-Shot-2023-07-18-at-14.40.20.png)
+
+### [Images](#images)
+
+For better understanding see the image above. Some things to consider:
+
+*   Images can be edge-to-edge or have a 32px padding on all four sides.
+*   Images and videos resize a bit on mobile.
+*   Images should be decorative, just illustrating the content they’re next to — if an image conveys meaning, it needs to have alt text.
+*   Images should limit or avoid English text, including UI text, because we don’t currently have a method for [translating screenshots](https://core.trac.wordpress.org/ticket/58354).
+*   Use icons to accent smaller columns/content
+
+### [Videos](#videos)
+
+**For accessibility,** if the video has voice audio, a text equivalent needs to be provided. If the video shows a flow or action being performed, then the process needs to be described in the text. The key thing is remembering the audience for the text description need to get the same level of information as a sighted audience gets from watching.
+
+What matters is that it’s clear that the video’s description is associated with the video, use figure and figcaption for this.
+
+**Tech reqs**
+
+*   Videos must be 480px wide (in general, most users will see this video at 436px wide, large phone sizes might see it up to 488px)
+*   The space for a full-width video is 1000px wide, and for a wider 2 column layout is 536px.
+*   Record using Kap (this is different than the recommendation in the post but @joen recommended this instead of Screeny)
+*   Convert .mov files to .mp4 using FFMPEG. Kap does appear to have the ability to export as MP4 and WebM though. Using that is preferable to converting if it works well.
+*   [How to: Good UI demo videos](https://automattic.design/2019/11/12/good-ui-demo-videos/)
+
+[Development](#development)
+---------------------------
+
+While the “About page” typically means `/wp-admin/about.php`, the updates in this ticket usually also apply to the whole section, `/wp-admin/contribute.php`, `/wp-admin/credits.php`, `/wp-admin/freedoms.php`, and `/wp-admin/privacy.php`. The content on the other pages rarely changes.
+
+Once a content draft & layout have been signed off by the marketing & design teams, the page can begin in code.
+
+### [Copy content from the doc](#copy-content-from-the-doc)
+
+Lay the content out in sections & columns to match the design. Make sure to wrap content in translation functions. If there are links, use `printf` and placeholders, and maybe translate the destination link too.
+
+### [Update the color custom properties](#update-the-color-custom-properties)
+
+If the colors have changed, update these in `/css/about.css`. Sometimes some color properties are not used, you can leave them alone — some are used on other pages (for example, contribute uses `has-subtle-background-color`). Use the [about-patterns plugin](https://github.com/ryelle/about-patterns) to help test out your CSS changes.
+
+### [Export assets from Figma](#export-assets-from-figma)
+
+The following are exported as SVG and saved locally. Use something like [svgomgui](https://jakearchibald.github.io/svgomg/) to optimize SVGs before saving them in `/wp-admin/images/`.
+
+*   Page headers, export without the text, `about-header-*.svg`
+*   Illustrations on freedoms, privacy, and contribute, `freedom-1.svg`, `freedom-2.svg`, etc; `privacy.svg`, `contribute-1.svg`, etc.
+*   Release badge, `about-release-badge.svg`
+
+The icons in the About page content are SVGs used inline, so export those and make sure `aria-hidden="true" focusable="false"` are on the `svg` tag.
+
+The feature screenshots are raster images, export these at 2x and convert to webp. They’re added to the page from external links, so use make.w.org if they’re still in flux. When finalized, upload to the s.w.org CDN (needs dotorg committer).
+
+### [Update URLs in the content](#update-urls-in-the-content)
+
+Local images usually use a query string to break caching, so update the version before release. For example, [see this line in freedoms.php](https://github.com/WordPress/wordpress-develop/blob/d6f72bad6f224a36627a5500a9c3e8ffb4eee524/src/wp-admin/freedoms.php#L61). This is not necessary for CDN images since those URLs change each release.
+
+The [field guide URL in `about.php`](https://github.com/WordPress/wordpress-develop/blob/d6f72bad6f224a36627a5500a9c3e8ffb4eee524/src/wp-admin/about.php#L272) should also be updated when that post is published (usually around RC). The release notes URL is generated and should work once that page is published, but [the version number should be updated here](https://github.com/WordPress/wordpress-develop/blob/d6f72bad6f224a36627a5500a9c3e8ffb4eee524/src/wp-admin/about.php#L285-L298).
+
+If any content in the page had links using placeholders, update those.
+
+### [Development timeline](#development-timeline)
+
+The timeline for this page depends on multiple teams, and there are a lot of things to wrangle, so the timeline needs to be flexible.
+
+*   beta3 (or the last beta before release): Commit the first-final draft of the page, basic layout and design.
+*   RC1: Commit the final draft of the page, update any finalized assets.
+*   During RC: Upload and commit the feature screenshots, update any URLs, update finalized assets.
+
+No string changes should happen after RC1, but exceptions are made, for example if something is technically inaccurate.
+
+[Props](#props)
+---------------
+
+The props (or credits) within a release are collected by the Release Squad and embedded in the About Page (and Release Announcement Post) via a shortcode. Gutenberg credits are collected via GitHub and added to the Credits API via a Meta Trac ticket (e.g., [5.7](https://meta.trac.wordpress.org/ticket/5649)). All non-code contributions are gathered by the Release Squad focus leads and also added to the Credits API. For the Noteworthy Contributors section, the Release Squad assembles the list and submits it as a Credits API update (e.g., [5.7](https://docs.google.com/spreadsheets/d/11pA2LM67fQ3q89ok-oMcGlzE1_vOJkPBMkn1tLGtWbI/edit#gid=1989970429)). As part of this process, whoever is leading the effort within the Release Squad should contact all squad members as well as each set of [Make Team Reps](https://make.wordpress.org/updates/team-reps/) to identify any additional individuals whose particularly meaningful contributions during the release cycle may merit inclusion in the Noteworthy Contributors section.
+
+When working to match GitHub usernames to WordPress.org usernames you can use [`https://profiles.wordpress.org/github:username`](https://profiles.wordpress.org/github:noisysocks) where putting the GitHub username at the end of that URL will translate to the respective WordPress.org profile. This will work for any user who has [associated their GitHub account with their WordPress.org profile](https://make.wordpress.org/core/2020/03/19/associating-github-accounts-with-wordpress-org-profiles/). There is a similar method for converting a Slack username to a WordPress.org username by using [`https://profiles.wordpress.org/$slack_id`](https://profiles.wordpress.org/$slack_id) where the Slack ID comes from a Slack user’s details (Click and avatar > View full profile > More \[…\] > Copy ID).
